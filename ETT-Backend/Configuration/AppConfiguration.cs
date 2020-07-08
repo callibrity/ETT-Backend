@@ -34,8 +34,6 @@ namespace ETT_Backend.Configuration
       string result = Environment.GetEnvironmentVariable(configurationKey.ToUpper());
       if (String.IsNullOrEmpty(result))
         result = configuration.GetSection(configurationKey).Value;
-      Console.WriteLine(result);
-      Console.WriteLine(configurationKey);
       return result;
     }
   }
