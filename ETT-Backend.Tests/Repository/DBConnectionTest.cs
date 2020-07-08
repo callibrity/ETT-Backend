@@ -22,6 +22,7 @@ namespace ETT_Backend.Repository.Test
     public void ShouldCreateDBConnectionObject()
     {
       DBConnection con = new DBConnection();
+      Assert.NotNull(con);
     }
 
     [Fact]

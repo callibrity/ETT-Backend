@@ -12,11 +12,10 @@ namespace ETT_Backend.Configuration
     private static IConfigurationRoot configuration;
     static AppConfiguration()
     {
-      ServiceCollection serviceCollection = new ServiceCollection();
-      ConfigureServices(serviceCollection);
+      ConfigureServices();
     }
 
-    private static void ConfigureServices(IServiceCollection serviceCollection)
+    private static void ConfigureServices()
     {
       string dir = System.AppDomain.CurrentDomain.BaseDirectory;
       string github = Environment.GetEnvironmentVariable("GITHUB");
@@ -25,8 +24,6 @@ namespace ETT_Backend.Configuration
           .SetBasePath(System.AppDomain.CurrentDomain.BaseDirectory)
           .AddJsonFile(appSettingsFile, false)
           .Build();
-
-      serviceCollection.AddSingleton<IConfigurationRoot>(configuration);
     }
 
     public static string GetValue(string configurationKey)
