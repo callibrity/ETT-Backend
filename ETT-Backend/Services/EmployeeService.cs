@@ -12,7 +12,13 @@ namespace ETT_Backend.Services
         {
             try 
             {
-                var employee = QueryDatabase(email);
+                Employee employee;
+                using (DBConnection dbconnection = new DBConnection())
+                {
+                    dbconnection.Connect();
+                    string query = QueryGenerator.GetEmployee(email);
+                    employee = dbconnection.ExecuteQuery<Employee>(query)[0];
+                }
                 return new EmployeeResponse(employee);  
             }
             catch (Exception e)
@@ -20,18 +26,6 @@ namespace ETT_Backend.Services
                 Console.Write("EmployeeService employee retrieval failed\n", e.Message);
                 return null;
             }  
-        }
-
-        public Employee QueryDatabase(string email)
-        {
-            Employee employee;
-            using (DBConnection dbconnection = new DBConnection())
-            {
-                dbconnection.Connect();
-                string query = QueryGenerator.GetEmployee(email);
-                employee = dbconnection.ExecuteQuery<Employee>(query)[0];
-            }
-            return employee;
         }
     }
 }

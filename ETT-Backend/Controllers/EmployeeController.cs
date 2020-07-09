@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ETT_Backend.Interfaces;
+using ETT_Backend.Models;
 using ETT_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace ETT_Backend.Controllers
         }
 
         [HttpGet("{email}")]
-        public IActionResult Get(string email)
+        public ActionResult<EmployeeResponse> Get(string email)
         {
             var response = _EmployeeService.RetrieveEmployeeInfo(email);
             if (response == null)
