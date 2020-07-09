@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ETT_Backend.Interfaces;
+﻿using ETT_Backend.Interfaces;
 using ETT_Backend.Models;
-using ETT_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETT_Backend.Controllers
 {
@@ -24,6 +18,7 @@ namespace ETT_Backend.Controllers
         }
 
         [HttpGet("{email}")]
+        [Authorize]
         public ActionResult<EmployeeResponse> Get(string email)
         {
             var response = _EmployeeService.RetrieveEmployeeInfo(email);
