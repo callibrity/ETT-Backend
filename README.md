@@ -6,7 +6,7 @@
 
 ## Database
 We are using a postgres SQL database located on Google Cloud. To view the database settings, go to https://console.cloud.google.com/ \-> SQL -> intranet-pgsql.
-- Make sure you are using your callibrity goole account and the 'intranet' project is selected. 
+- Make sure you are using your callibrity google account and the 'intranet' project is selected. 
 
 To access the database and view tables, download a database tool such as DBeaver or SQuirrel and ask someone on the team for credentials to connect.
 
