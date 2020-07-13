@@ -1,7 +1,7 @@
 # Employee Time Tracking Backend
 
 ## Technologies used
-- C#
+- C# \- Web API template
 - Xunit testing
 
 ## Database
