@@ -30,8 +30,18 @@ namespace ETT_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(); ;
             services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.WithMethods("get");
+                    builder.WithOrigins("http://localhost:3000");
+                    builder.WithHeaders("Authorization");
+
+                });
+            });
 
             services.AddAuthentication(options =>
             {
@@ -42,6 +52,8 @@ namespace ETT_Backend
             {
                 options.UseGoogle(AppConfiguration.GetValue("ClientId"));
             });
+
+
 
             services.AddSwaggerGen(c =>
             {
@@ -91,6 +103,7 @@ namespace ETT_Backend
 
             app.UseRouting();
 
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 
