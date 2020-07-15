@@ -32,6 +32,15 @@ namespace ETT_Backend
         {
             services.AddControllers();
             services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.WithMethods("get");
+                    builder.WithOrigins("http://localhost:3000");
+                    builder.WithHeaders("Authorization");
+                });
+            });
 
             services.AddAuthentication(options =>
             {
@@ -42,6 +51,8 @@ namespace ETT_Backend
             {
                 options.UseGoogle(AppConfiguration.GetValue("ClientId"));
             });
+
+
 
             services.AddSwaggerGen(c =>
             {
@@ -91,6 +102,7 @@ namespace ETT_Backend
 
             app.UseRouting();
 
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
 

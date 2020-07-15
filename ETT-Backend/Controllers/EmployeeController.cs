@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ETT_Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
         private IEmployeeService _EmployeeService;
@@ -17,10 +17,11 @@ namespace ETT_Backend.Controllers
             _EmployeeService = employeeService;
         }
 
-        [HttpGet("{email}")]
+        [HttpGet]
         [Authorize]
-        public ActionResult<EmployeeResponse> Get(string email)
+        public ActionResult<EmployeeResponse> Get()
         {
+            var email = User.FindFirst(x => x.Type == "email").Value;
             var response = _EmployeeService.RetrieveEmployeeInfo(email);
             if (response == null)
             {
