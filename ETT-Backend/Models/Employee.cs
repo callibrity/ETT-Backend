@@ -8,7 +8,8 @@ namespace ETT_Backend.Models
     public string EmployeeNumber { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public double TargetBillableHours { get; set; }
+    public double YearlyBillableTargetHours { get; set; }
+    public double BillableTargetToDate { get; set; }
     public double CurrentBillableHours { get; set; }
     public double TargetTrainingHours { get; set; }
     public double CurrentTrainingHours { get; set; }
@@ -16,13 +17,14 @@ namespace ETT_Backend.Models
     public double OverflowPTO { get; set; }
     public double UsedPTO { get; set; }
 
-    public Employee(string employeeNumber, string firstName, string lastName, double targetBillableHours, double currentBillableHours,
+    public Employee(string employeeNumber, string firstName, string lastName, double yearlyBillableTargetHours, double billableTargetToDate, double currentBillableHours,
                     double targetTrainingHours, double currentTrainingHours, double totalYearlyPTO, double overflowPTO, double usedPTO)
     {
       this.EmployeeNumber = employeeNumber;
       this.FirstName = firstName;
       this.LastName = lastName;
-      this.TargetBillableHours = targetBillableHours;
+      this.YearlyBillableTargetHours = yearlyBillableTargetHours;
+      this.BillableTargetToDate = billableTargetToDate;
       this.CurrentBillableHours = currentBillableHours;
       this.TargetTrainingHours = targetTrainingHours;
       this.CurrentTrainingHours = currentTrainingHours;
