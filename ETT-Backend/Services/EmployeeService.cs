@@ -10,7 +10,7 @@ namespace ETT_Backend.Services
     {
         public EmployeeResponse RetrieveEmployeeInfo(string email)
         {
-            try 
+            try
             {
                 Employee employee;
                 using (DBConnection dbconnection = new DBConnection())
@@ -19,13 +19,13 @@ namespace ETT_Backend.Services
                     string query = QueryGenerator.GetEmployee(email);
                     employee = dbconnection.ExecuteQuery<Employee>(query)[0];
                 }
-                return new EmployeeResponse(employee);  
+                return new EmployeeResponse(employee);
             }
             catch (Exception e)
             {
                 Console.Write("EmployeeService employee retrieval failed\n", e.Message);
                 return null;
-            }  
+            }
         }
     }
 }

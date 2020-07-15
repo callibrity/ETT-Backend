@@ -39,7 +39,6 @@ namespace ETT_Backend
                     builder.WithMethods("get");
                     builder.WithOrigins("http://localhost:3000");
                     builder.WithHeaders("Authorization");
-
                 });
             });
 
