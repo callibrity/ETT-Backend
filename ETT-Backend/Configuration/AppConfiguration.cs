@@ -19,7 +19,7 @@ namespace ETT_Backend.Configuration
     {
       string dir = System.AppDomain.CurrentDomain.BaseDirectory;
       string github = Environment.GetEnvironmentVariable("GITHUB");
-      string appSettingsFile = String.IsNullOrEmpty(github) ? "appsettings.json" : "sample.appsettings.json";
+      string appSettingsFile = String.IsNullOrEmpty(github) ? "appsettings.json" : "appsettings.Development.json";
       configuration = new ConfigurationBuilder()
           .SetBasePath(System.AppDomain.CurrentDomain.BaseDirectory)
           .AddJsonFile(appSettingsFile, false)
