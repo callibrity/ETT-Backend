@@ -13,7 +13,7 @@ namespace ETT_Backend.Controllers.Test
   public class EmployeeControllerTest
   {
     [Fact]
-    public void RetrieveEmployeeHoursvalidEmail()
+    public void RetrieveEmployeeMetrics()
     {
       var testEmail = "test@callibrity.com";
       var employee = new Employee("1111", "test", "name", 100, 100, 100, 100, 100, 100, 100, 100);
@@ -41,6 +41,34 @@ namespace ETT_Backend.Controllers.Test
       Assert.NotNull(okResult);
       Assert.Equal(200, okResult.StatusCode);
       Assert.Equal("1111", resValue.EmployeeId);
+      empService.Verify(x => x.RetrieveEmployeeMetrics(It.IsAny<string>()), Times.Once);
+    }
+
+    [Fact]
+    public void FailToRetrieveEmployeeMetrics()
+    {
+      var testEmail = "test@callibrity.com";
+      var empService = new Mock<IEmployeeService>();
+      EmployeeResponse mockRes = null; // Return a null response from service call
+      empService.Setup(serv => serv.RetrieveEmployeeMetrics(It.IsAny<string>())).Returns(mockRes);
+      var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+      {
+        new Claim(ClaimTypes.Name, "test"),
+        new Claim(ClaimTypes.NameIdentifier, "1"),
+        new Claim("email", testEmail),
+      }, "mock"));
+
+      var controller = new EmployeeController(empService.Object);
+      controller.ControllerContext = new ControllerContext()
+      {
+        HttpContext = new DefaultHttpContext() { User = user }
+      };
+      
+      var result = controller.GetEmployeeMetrics().Result;
+      var notFoundResult = result as NotFoundResult;
+
+      Assert.NotNull(notFoundResult);
+      Assert.Equal(404, notFoundResult.StatusCode);
       empService.Verify(x => x.RetrieveEmployeeMetrics(It.IsAny<string>()), Times.Once);
     }
   }
