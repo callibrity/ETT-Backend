@@ -18,7 +18,7 @@ namespace ETT_Backend.Services.Test
     {
       var empService = new EmployeeService();
       var hoursResponse = empService.RetrieveEmployeeMetrics("test@doesntexist.com");
-      Assert.Equal(null, hoursResponse);
+      Assert.Null(hoursResponse);
     }
   }
 }
