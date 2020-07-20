@@ -5,6 +5,8 @@ using ETT_Backend.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using ETT_Backend.Interfaces;
+using Newtonsoft.Json;
 
 namespace ETT_Backend.Controllers.Test
 {
@@ -16,8 +18,8 @@ namespace ETT_Backend.Controllers.Test
       var testEmail = "test@callibrity.com";
       var employee = new Employee("1111", "test", "name", 100, 100, 100, 100, 100, 100, 100, 100);
       var mockEmployeeRes = new EmployeeResponse(employee);
-      var empService = new Mock<EmployeeService>();
-      empService.Setup(serv => serv.RetrieveEmployeeMetrics(testEmail)).Returns(mockEmployeeRes);
+      var empService = new Mock<IEmployeeService>();
+      empService.Setup(serv => serv.RetrieveEmployeeMetrics(It.IsAny<string>())).Returns(mockEmployeeRes);
       var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
       {
         new Claim(ClaimTypes.Name, "test"),
@@ -30,10 +32,16 @@ namespace ETT_Backend.Controllers.Test
       {
         HttpContext = new DefaultHttpContext() { User = user }
       };
-
+      
       var result = controller.GetEmployeeMetrics().Result;
+      var okResult = result as ObjectResult;
+      var objString = okResult.Value.ToString();
+      var resValue = JsonConvert.DeserializeObject<EmployeeResponse>(objString);
 
-      Assert.NotNull(result);
+      Assert.NotNull(okResult);
+      Assert.Equal(200, okResult.StatusCode);
+      Assert.Equal("1111", resValue.EmployeeId);
+      empService.Verify(x => x.RetrieveEmployeeMetrics(It.IsAny<string>()), Times.Once);
     }
   }
 }
