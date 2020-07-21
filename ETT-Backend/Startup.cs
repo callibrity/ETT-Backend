@@ -14,18 +14,19 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using ETT_Backend.Configuration;
-
+using ETT_Backend.Repository;
 
 namespace ETT_Backend
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppConfiguration.Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -49,9 +50,8 @@ namespace ETT_Backend
             })
             .AddJwtBearer(options =>
             {
-                options.UseGoogle(AppConfiguration.GetValue("ClientId"));
+                options.UseGoogle(Configuration.GetValue<string>("ClientId"));
             });
-
 
 
             services.AddSwaggerGen(c =>

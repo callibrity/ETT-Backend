@@ -20,8 +20,7 @@ namespace ETT_Backend.Repository
 
     public DBConnection()
     {
-      String connectionString = AppConfiguration.GetValue("Connection");
-      connection = new NpgsqlConnection(connectionString);
+      connection = new NpgsqlConnection(AppConfiguration.Configuration.GetValue<string>("CONNECTION"));
     }
 
     public void Connect()
