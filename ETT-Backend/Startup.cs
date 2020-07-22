@@ -20,11 +20,8 @@ namespace ETT_Backend
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
             AppConfiguration.Configuration = configuration;
         }
 
@@ -50,7 +47,7 @@ namespace ETT_Backend
             })
             .AddJwtBearer(options =>
             {
-                options.UseGoogle(Configuration.GetValue<string>("ClientId"));
+                options.UseGoogle(AppConfiguration.Configuration.GetValue<string>("CLIENTID"));
             });
 
 
