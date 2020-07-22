@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ett-backend:
+    image: ${DOCKER_REGISTRY-}ettbackend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
