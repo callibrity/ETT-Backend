@@ -4,6 +4,6 @@ namespace ETT_Backend.Interfaces
 {
     public interface IEmployeeService
     {
-        EmployeeResponse RetrieveEmployeeInfo(string email);
+        EmployeeResponse RetrieveEmployeeMetrics(string email);
     }
 }

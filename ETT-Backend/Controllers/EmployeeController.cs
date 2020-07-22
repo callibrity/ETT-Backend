@@ -19,10 +19,11 @@ namespace ETT_Backend.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<EmployeeResponse> Get()
+        [Route("hours")]
+        public ActionResult<EmployeeResponse> GetEmployeeMetrics()
         {
             var email = User.FindFirst(x => x.Type == "email").Value;
-            var response = _EmployeeService.RetrieveEmployeeInfo(email);
+            var response = _EmployeeService.RetrieveEmployeeMetrics(email);
             if (response == null)
             {
                 return NotFound();

@@ -8,7 +8,7 @@ namespace ETT_Backend.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        public EmployeeResponse RetrieveEmployeeInfo(string email)
+        public EmployeeResponse RetrieveEmployeeMetrics(string email)
         {
             try
             {
