@@ -32,6 +32,7 @@ namespace ETT_Backend
         {
             services.AddControllers();
             services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<ITableService, TableService>();
             services.AddCors(opt =>
             {
                 opt.AddDefaultPolicy(builder =>
