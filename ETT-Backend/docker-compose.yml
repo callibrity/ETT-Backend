@@ -14,9 +14,10 @@ services:
 
   ett-backend:
     container_name: ett-backend-api-compose
+    image: ett-backend-api-compose
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./local.Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
