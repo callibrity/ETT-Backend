@@ -32,6 +32,23 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
-        }
+        },
+        {
+          "name": ".NET Core Docker Attach",
+          "type": "coreclr",
+          "request": "attach",
+          "processId": "1",
+          "sourceFileMap": {
+              "/src": "${workspaceFolder}",
+          },
+          "pipeTransport": {
+              "pipeProgram": "docker",
+              "pipeArgs": [ "exec", "-i", "ett-backend-api-compose" ],
+              "debuggerPath": "/vsdbg/vsdbg",
+              "pipeCwd": "${workspaceFolder}",
+              "quoteArgs": false
+          },
+          "justMyCode": false
+      }
     ]
 }
