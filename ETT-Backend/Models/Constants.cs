@@ -5,12 +5,12 @@ namespace ETT_Backend.Models.Constants
 {
   public class Constants
   {
-    public static Dictionary<string, string> ConstraintKeys = 
-      new Dictionary<string, string>()
+    public static Dictionary<string, List<string>> ConstraintKeys = 
+      new Dictionary<string, List<string>>()
       {
-        {"employees", "callibrity_email"},
-        {"ett_employee", "employee_number"},
-        {"ett_employee_metrics", "employee_number_fk, the_year"}
+        {"employees", new List<string>() {"callibrity_email"}},
+        {"ett_employee", new List<string>() {"employee_number"}},
+        {"ett_employee_metrics", new List<string>() {"employee_number_fk", "the_year"}}
       };
   }
 

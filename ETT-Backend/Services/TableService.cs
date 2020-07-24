@@ -34,14 +34,19 @@ namespace ETT_Backend.Services
 
     public string CreateInsertStatement(string table, List<dynamic> rows)
     {
-      var insertStatement = QueryGenerator.InsertObjectHeader(table.ToLower(), JObject.Parse(rows[0].ToString()));
+      // Parse the first object sent. Use this to reference the column names sent over
+      var firstRowObject = JObject.Parse(rows[0].ToString());
+      // INSERT INTO table_name(columnns...) VALUES
+      var insertStatement = QueryGenerator.InsertObjectHeader(table.ToLower(), firstRowObject);
       foreach (var row in rows)
       {
         var parsedRow = JObject.Parse(row.ToString());
+        // (values...),(values...)
         insertStatement += $"{QueryGenerator.InsertObject(parsedRow)},";
       }
       insertStatement = insertStatement.TrimEnd(',');
-      insertStatement += QueryGenerator.Conflict(ConstraintKeys[table.ToLower()]);
+      // ON CONFLICT DO UPDATE SET columns=EXCLUDED.columns
+      insertStatement += QueryGenerator.OnConflict(ConstraintKeys[table.ToLower()], firstRowObject);
       return insertStatement;
     }
   }

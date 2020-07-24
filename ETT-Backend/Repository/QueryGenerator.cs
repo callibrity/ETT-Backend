@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ETT_Backend.Models;
 using Newtonsoft.Json.Linq;
 
@@ -20,7 +21,7 @@ namespace ETT_Backend.Repository
       string insertStatement = $"INSERT INTO {tableName.ToLower()}(";
       foreach (var prop in obj)
       {
-        insertStatement += $"{prop.Key},";
+        insertStatement += $"{prop.Key.ToLower()},";
       }
       insertStatement = insertStatement.TrimEnd(',');
       insertStatement += ")";
@@ -46,9 +47,22 @@ namespace ETT_Backend.Repository
       return values += ")";
     }
 
-    public static string Conflict(string key)
+    public static string OnConflict(List<string> keys, JObject row)
     {
-      return $" ON CONFLICT ({key}) DO NOTHING";
+      var conflict = " ON CONFLICT (";
+      foreach (var key in keys)
+      {
+        conflict += $"{key},";
+      }
+      conflict = conflict.TrimEnd(',');
+      conflict += ") DO UPDATE SET ";
+      foreach (var property in row)
+      {
+        if (!keys.Contains(property.Key.ToLower()))
+          conflict += $"{property.Key.ToLower()}=EXCLUDED.{property.Key.ToLower()},";
+      }
+      conflict = conflict.TrimEnd(',');
+      return conflict;
     }
   }
 }
