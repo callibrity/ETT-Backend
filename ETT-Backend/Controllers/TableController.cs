@@ -24,7 +24,7 @@ namespace ETT_Backend.Controllers
         [HttpPost]
         [Authorize]
         [Route("{table}")]
-        public ActionResult InsertEmployees(string table, List<dynamic> rows)
+        public ActionResult InsertData(string table, List<dynamic> rows)
         {
             var response = _TableService.InsertRows(table, rows);
             if (response < 0)
