@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Xunit;
-using Moq;
-using Microsoft.Extensions.DependencyInjection;
 using ETT_Backend.Repository;
-using Microsoft.Extensions.Configuration;
 using ETT_Backend.Models;
 using ETT_Backend.Tests.Utils;
-using System.Linq;
 
 namespace ETT_Backend.Services.Test
 {
