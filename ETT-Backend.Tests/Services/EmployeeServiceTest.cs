@@ -1,24 +1,62 @@
+using System;
+using System.Collections.Generic;
 using Xunit;
+using Moq;
+using Microsoft.Extensions.DependencyInjection;
+using ETT_Backend.Repository;
+using Microsoft.Extensions.Configuration;
+using ETT_Backend.Models;
+using ETT_Backend.Tests.Utils;
+using System.Linq;
 
 namespace ETT_Backend.Services.Test
 {
   public class EmployeeServiceTest
   {
     [Fact]
-    public void RetrieveEmployeeHoursvalidEmail() 
+    public void RetrieveEmployeeHoursValidEmail()
     {
-      var empService = new EmployeeService();
-      var hoursResponse = empService.RetrieveEmployeeMetrics("cmason@callibrity.com");
-      Assert.Equal("0919", hoursResponse.EmployeeId);
-      Assert.Equal(20, hoursResponse.Billable.CurrentHours);
+      List<Employee> dbRetVal = new List<Employee>()
+      {
+        new Employee("lol1", "lol2", "lol3", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),
+        new Employee("lul", "lul", "lul", 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)
+      };
+
+      MockServiceProvider serviceProvider = new MockServiceProvider()
+        .AddMockDBConnection();
+
+      serviceProvider.MockDBConnection
+         .Setup(_ => _.ExecuteQuery<Employee>(QueryGenerator.GetEmployee("cmason@callibrity.com")))
+         .Returns(dbRetVal);
+
+      EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
+      EmployeeResponse response = employeeService.RetrieveEmployeeMetrics("cmason@callibrity.com");
+
+      Assert.Equal("lol1", response.EmployeeId);
+      Assert.Equal(3.0, response.Billable.CurrentHours);
+      Assert.Equal(2.0, response.Billable.CurrentTarget);
+      Assert.Equal(1.0, response.Billable.TotalTarget);
+      Assert.Equal(-1.0, response.Growth.HoursRemaining);
+      Assert.Equal(5.0, response.Growth.HoursUsed);
+      Assert.Equal(4.0, response.Growth.TotalGrowth);
     }
 
     [Fact]
-    public void RetrieveEmployeeHoursInvalidEmail() 
+    public void RetrieveEmployeeHoursInvalidEmail()
     {
-      var empService = new EmployeeService();
-      var hoursResponse = empService.RetrieveEmployeeMetrics("test@doesntexist.com");
-      Assert.Null(hoursResponse);
+      List<Employee> dbRetVal = new List<Employee>();
+
+      MockServiceProvider serviceProvider = new MockServiceProvider()
+        .AddMockDBConnection();
+
+      serviceProvider.MockDBConnection
+         .Setup(_ => _.ExecuteQuery<Employee>(QueryGenerator.GetEmployee("cmason@callibrity.com")))
+         .Returns(dbRetVal);
+
+      EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
+      EmployeeResponse response = employeeService.RetrieveEmployeeMetrics("cmason@callibrity.com");
+
+      Assert.Null(response);
     }
   }
 }

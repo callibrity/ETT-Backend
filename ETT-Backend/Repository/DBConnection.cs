@@ -6,7 +6,7 @@ using ETT_Backend.Configuration;
 
 namespace ETT_Backend.Repository
 {
-  public class DBConnection : IDisposable
+  public class DBConnection : IDisposable, IDBConnection
   {
     public bool IsConnectionOpen
     {
@@ -18,9 +18,9 @@ namespace ETT_Backend.Repository
     }
     private NpgsqlConnection connection;
 
-    public DBConnection()
+    public DBConnection(IConfiguration configuration)
     {
-      connection = new NpgsqlConnection(AppConfiguration.Configuration.GetValue<string>("CONNECTION"));
+      connection = new NpgsqlConnection(configuration.GetValue<string>("CONNECTION"));
     }
 
     public void Connect()

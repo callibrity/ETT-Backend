@@ -1,6 +1,7 @@
 using Xunit;
 using System.Collections.Generic;
 using ETT_Backend.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace ETT_Backend.Repository.Test
 {
@@ -21,14 +22,14 @@ namespace ETT_Backend.Repository.Test
     [Fact]
     public void ShouldCreateDBConnectionObject()
     {
-      DBConnection con = new DBConnection();
+      DBConnection con = new DBConnection(null);
       Assert.NotNull(con);
     }
 
     [Fact]
     public void ConnectionShouldInitiallyBeClosed()
     {
-      DBConnection con = new DBConnection();
+      DBConnection con = new DBConnection(null);
       Assert.False(con.IsConnectionOpen);
     }
 
@@ -36,7 +37,7 @@ namespace ETT_Backend.Repository.Test
     public void ShouldConnectToDatabase()
     {
 
-      DBConnection con = new DBConnection();
+      DBConnection con = new DBConnection(null);
       con.Connect();
       Assert.True(con.IsConnectionOpen);
     }
@@ -44,7 +45,7 @@ namespace ETT_Backend.Repository.Test
     [Fact]
     public void ShouldCLoseConnection()
     {
-      DBConnection con = new DBConnection();
+      DBConnection con = new DBConnection(null);
       con.Connect();
       con.Dispose();
       Assert.False(con.IsConnectionOpen);
@@ -54,7 +55,7 @@ namespace ETT_Backend.Repository.Test
     public void ShouldCloseConnectionAfterDisposal()
     {
       DBConnection con;
-      using (con = new DBConnection())
+      using (con = new DBConnection(null))
       {
         con.Connect();
       }
@@ -67,7 +68,7 @@ namespace ETT_Backend.Repository.Test
     {
       List<TestClass> temp = null;
       DBConnection con;
-      using (con = new DBConnection())
+      using (con = new DBConnection(null))
       {
         con.Connect();
         temp = con.ExecuteQuery<TestClass>(@"Select 'hi', 7");
@@ -80,7 +81,7 @@ namespace ETT_Backend.Repository.Test
     public void ShouldReturnNegativeOneOnQuery()
     {
       DBConnection con;
-      using (con = new DBConnection())
+      using (con = new DBConnection(null))
       {
         con.Connect();
         Assert.Equal(-1, con.ExecuteNonQuery("Select NOW()"));
