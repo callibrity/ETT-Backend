@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ETT_Backend.Models;
 using ETT_Backend.Repository;
 using Newtonsoft.Json.Linq;
 using static ETT_Backend.Models.Constants.Constants;
 using Xunit;
+using ETT_Backend.Tests.Utils;
 
 namespace ETT_Backend.Services.Test
 {
@@ -121,7 +121,7 @@ namespace ETT_Backend.Services.Test
     [Fact]
     public void CreateFullInsertStatement()
     {
-      var tableService = new TableService();
+      var tableService = new TableService(new MockServiceProvider().Build());
       var expectedInsertValue = 
         "INSERT INTO employees(name,office,hours,callibrity_email) VALUES ('testName','Cincinnati',12.5,'test123@test.com'),('anotherTest','Cincinnati',30,'test456@test.com')"
         + " ON CONFLICT (callibrity_email) DO UPDATE SET name=EXCLUDED.name,office=EXCLUDED.office,hours=EXCLUDED.hours";

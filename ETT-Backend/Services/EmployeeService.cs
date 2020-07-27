@@ -3,7 +3,6 @@ using System.Linq;
 using ETT_Backend.Interfaces;
 using ETT_Backend.Models;
 using ETT_Backend.Repository;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ETT_Backend.Services
