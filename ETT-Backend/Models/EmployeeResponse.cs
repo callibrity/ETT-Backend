@@ -20,5 +20,9 @@ namespace ETT_Backend.Models
             Billable = new BillableHours(emp.CurrentBillableHours, emp.BillableTargetToDate, emp.YearlyBillableTargetHours);
             Growth = new GrowthHours(emp.CurrentTrainingHours, emp.TargetTrainingHours - emp.CurrentTrainingHours, emp.TargetTrainingHours);
         }
+
+        public EmployeeResponse()
+        {
+        }
     }
 }

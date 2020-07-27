@@ -25,6 +25,7 @@ namespace ETT_Backend
         {
             services.AddControllers();
             services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<ITableService, TableService>();
             services.AddScoped<IDBConnection, DBConnection>();
             
             AddCors(services);
