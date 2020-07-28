@@ -46,8 +46,7 @@ jobs:
       run: |-
         gcloud builds submit \
           --quiet \
-          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-      working-directory: $WORKING-DIRECTORY
+          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" $WORKING-DIRECTORY
     # Deploy image to Cloud Run
     - name: Deploy
       run: |-
