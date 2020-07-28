@@ -4,6 +4,7 @@ using ETT_Backend.Interfaces;
 using ETT_Backend.Models;
 using ETT_Backend.Models.Constants;
 using ETT_Backend.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using static ETT_Backend.Models.Constants.Constants;
@@ -12,16 +13,24 @@ namespace ETT_Backend.Services
 {
   public class TableService : ITableService
   {
+    IServiceProvider ServiceProvider;
+
+    public TableService(IServiceProvider serviceProvider)
+    {
+      ServiceProvider = serviceProvider;
+    }
+
     public int InsertRows(string table, List<dynamic> rows)
     {
       try
       {
         int dbResponse = 0;
-        using (DBConnection dbconnection = new DBConnection())
+        using (IServiceScope scope = ServiceProvider.CreateScope())
         {
-          dbconnection.Connect();
+          IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
+          dbConnection.Connect();
           string insertStatement = CreateInsertStatement(table, rows);
-          dbResponse = dbconnection.ExecuteNonQuery(insertStatement);
+          dbResponse = dbConnection.ExecuteNonQuery(insertStatement);
         }
         return dbResponse;
       }

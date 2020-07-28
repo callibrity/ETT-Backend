@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETT-Backend", "ETT-Backend\ETT-Backend.csproj", "{6BF885E1-51D5-4100-9B34-AE3CFD9B739C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETT-Backend", "ETT-Backend\ETT-Backend.csproj", "{6BF885E1-51D5-4100-9B34-AE3CFD9B739C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETT-Backend.Tests", "ETT-Backend.Tests\ETT-Backend.Tests.csproj", "{28B51A99-E1DA-4FED-AB9E-643B8ADBBD80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETT-Backend.Tests", "ETT-Backend.Tests\ETT-Backend.Tests.csproj", "{28B51A99-E1DA-4FED-AB9E-643B8ADBBD80}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "ETT-Backend\docker-compose.dcproj", "{F63FD5B0-36D0-4758-A702-BD2BD1B30E78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{28B51A99-E1DA-4FED-AB9E-643B8ADBBD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B51A99-E1DA-4FED-AB9E-643B8ADBBD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B51A99-E1DA-4FED-AB9E-643B8ADBBD80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63FD5B0-36D0-4758-A702-BD2BD1B30E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63FD5B0-36D0-4758-A702-BD2BD1B30E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63FD5B0-36D0-4758-A702-BD2BD1B30E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63FD5B0-36D0-4758-A702-BD2BD1B30E78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

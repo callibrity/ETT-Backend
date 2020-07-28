@@ -1,31 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ETT_Backend.Interfaces;
 using ETT_Backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
-using ETT_Backend.Configuration;
-
+using ETT_Backend.Repository;
 
 namespace ETT_Backend
 {
     public class Startup
     {
+        private IConfiguration Configuration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,6 +26,40 @@ namespace ETT_Backend
             services.AddControllers();
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddSingleton<ITableService, TableService>();
+            services.AddScoped<IDBConnection, DBConnection>();
+            
+            AddCors(services);
+            AddAuthentication(services);
+            AddSwagger(services);
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            app.UseCors();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "My Api");
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+        public void AddCors(IServiceCollection services) =>
             services.AddCors(opt =>
             {
                 opt.AddDefaultPolicy(builder =>
@@ -43,6 +70,7 @@ namespace ETT_Backend
                 });
             });
 
+        public void AddAuthentication(IServiceCollection services) =>
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,11 +78,10 @@ namespace ETT_Backend
             })
             .AddJwtBearer(options =>
             {
-                options.UseGoogle(AppConfiguration.GetValue("ClientId"));
+                options.UseGoogle(Configuration.GetValue<string>("CLIENTID"));
             });
 
-
-
+        public void AddSwagger(IServiceCollection services) =>
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -91,32 +118,5 @@ namespace ETT_Backend
                 c.AddSecurityDefinition("JWT", securityDefinition);
                 c.AddSecurityRequirement(securityRequirements);
             });
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
-
-            app.UseCors();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "My Api");
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
     }
 }
