@@ -24,4 +24,3 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
         env:
           CONNECTION: ${{ secrets.CONNECTION }}
-          GITHUB: true
