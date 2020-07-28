@@ -23,7 +23,7 @@ env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   RUN_REGION: us-east4
   SERVICE_NAME: intranet-api-staging
-  WORKING-DIRECTORY: ./ETT-Backend
+  WORKING_DIRECTORY: ./ETT-Backend
 
 jobs:
   setup-build-deploy:
@@ -46,7 +46,7 @@ jobs:
       run: |-
         gcloud builds submit \
           --quiet \
-          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" $WORKING-DIRECTORY
+          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" $WORKING_DIRECTORY
     # Deploy image to Cloud Run
     - name: Deploy
       run: |-
