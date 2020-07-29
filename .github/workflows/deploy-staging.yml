@@ -21,7 +21,6 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
-  CONNECTION: ${{ secrets.CONNECTION }}
   RUN_REGION: us-east4
   SERVICE_NAME: intranet-api-staging
   WORKING_DIRECTORY: ./ETT-Backend
@@ -57,6 +56,5 @@ jobs:
           --region "$RUN_REGION" \
           --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
           --platform "managed" \
-          --allow-unauthenticated
+          --allow-unauthenticated \
           --port $PORT
-          --set-env-vars "CONNECTION=$CONNECTION"
