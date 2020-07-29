@@ -58,5 +58,5 @@ jobs:
           --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
           --platform "managed" \
           --allow-unauthenticated
-          --port "$PORT"
+          --port $PORT
           --set-env-vars "CONNECTION=$CONNECTION"
