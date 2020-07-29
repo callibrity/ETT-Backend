@@ -21,7 +21,6 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
-  CONNECTION: ${{ secrets.CONNECTION }}
   RUN_REGION: us-east4
   SERVICE_NAME: intranet-api-staging
   WORKING_DIRECTORY: ./ETT-Backend
@@ -59,4 +58,4 @@ jobs:
           --platform "managed" \
           --allow-unauthenticated \
           --port $PORT \
-          --set-secrets "CONNECTION=$CONNECTION"
+          --set-env-vars: "ASPNETCORE_ENVIRONMENT=Staging"
