@@ -31,7 +31,7 @@ jobs:
       # Check for image
       - run: |-
           gcloud container images describe \
-            --quiet
+            --quiet \
             "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA"
   
       # Deploy image to Cloud Run
