@@ -61,4 +61,4 @@ jobs:
             --platform "managed" \
             --allow-unauthenticated \
             --port $PORT \
-            --set-env-vars "ASPNETCORE_ENVIRONMENT=Staging"
+            --update-env-vars "ASPNETCORE_ENVIRONMENT=Staging"

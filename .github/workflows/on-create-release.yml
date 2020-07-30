@@ -45,4 +45,4 @@ jobs:
             --platform "managed" \
             --allow-unauthenticated \
             --port $PORT \
-            --set-env-vars "ASPNETCORE_ENVIRONMENT=Production"
+            --update-env-vars "ASPNETCORE_ENVIRONMENT=Production"
