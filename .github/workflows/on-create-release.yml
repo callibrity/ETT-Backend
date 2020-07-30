@@ -15,8 +15,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy to Cloud Run Staging
-    needs: build-image
+    name: Deploy to Cloud Run Production
     runs-on: ubuntu-latest
 
     steps:
