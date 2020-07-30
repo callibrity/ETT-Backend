@@ -6,7 +6,6 @@ on:
     - master
 
 env:
-  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   RUN_REGION: us-east4
   MEMORY: 2048Mi
   CPU: 2000m
@@ -27,13 +26,13 @@ jobs:
         with:
           version: '290.0.1'
           service_account_key: ${{ secrets.RUN_SA_KEY }}
-          project_id: $PROJECT_ID
+          project_id: ${{ secrets.RUN_PROJECT }}
   
       # Build and push image to Google Container Registry
       - run: |-
           gcloud builds submit \
             --quiet \
-            --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" $WORKING_DIRECTORY
+            --tag "gcr.io/${{ secrets.RUN_PROJECT }}/$SERVICE_NAME:$GITHUB_SHA" $WORKING_DIRECTORY
 
   deploy:
     name: Deploy to Cloud Run Staging
@@ -48,7 +47,7 @@ jobs:
         with:
           version: '290.0.1'
           service_account_key: ${{ secrets.RUN_SA_KEY }}
-          project_id: $PROJECT_ID
+          project_id: ${{ secrets.RUN_PROJECT }}
   
       # Deploy image to Cloud Run
       - run: |-
@@ -57,7 +56,7 @@ jobs:
             --region "$RUN_REGION" \
             --memory "$MEMORY" \
             --cpu "$CPU" \
-            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+            --image "gcr.io/${{ secrets.RUN_PROJECT }}/$SERVICE_NAME:$GITHUB_SHA" \
             --platform "managed" \
             --allow-unauthenticated \
             --port $PORT \
