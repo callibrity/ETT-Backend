@@ -9,6 +9,7 @@ env:
   RUN_REGION: us-east4
   MEMORY: 2048Mi
   CPU: 2000m
+  CONTAINER_REGISTRY: intranet-api
   SERVICE_NAME: intranet-api-staging
   WORKING_DIRECTORY: ./ETT-Backend
   PORT: 80
@@ -32,7 +33,7 @@ jobs:
       - run: |-
           gcloud builds submit \
             --quiet \
-            --tag "gcr.io/${{ secrets.RUN_PROJECT }}/$SERVICE_NAME:$GITHUB_SHA" $WORKING_DIRECTORY
+            --tag "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" $WORKING_DIRECTORY
 
   deploy:
     name: Deploy to Cloud Run Staging
@@ -56,7 +57,7 @@ jobs:
             --region "$RUN_REGION" \
             --memory "$MEMORY" \
             --cpu "$CPU" \
-            --image "gcr.io/${{ secrets.RUN_PROJECT }}/$SERVICE_NAME:$GITHUB_SHA" \
+            --image "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" \
             --platform "managed" \
             --allow-unauthenticated \
             --port $PORT \
