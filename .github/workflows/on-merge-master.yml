@@ -1,0 +1,64 @@
+name: On Merge Into Master
+
+on:
+  push:
+    branches:
+    - master
+
+env:
+  RUN_REGION: us-east4
+  MEMORY: 2048Mi
+  CPU: 2000m
+  CONTAINER_REGISTRY: intranet-api
+  SERVICE_NAME: intranet-api-staging
+  WORKING_DIRECTORY: ./ETT-Backend
+  PORT: 80
+
+jobs:
+  build-image:
+    name: Build Docker Image and Push to Cloud Container Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+  
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.RUN_SA_KEY }}
+          project_id: ${{ secrets.RUN_PROJECT }}
+  
+      # Build and push image to Google Container Registry
+      - run: |-
+          gcloud builds submit \
+            --quiet \
+            --tag "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" $WORKING_DIRECTORY
+
+  deploy:
+    name: Deploy to Cloud Run Staging
+    needs: build-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+  
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.RUN_SA_KEY }}
+          project_id: ${{ secrets.RUN_PROJECT }}
+  
+      # Deploy image to Cloud Run
+      - run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --quiet \
+            --region "$RUN_REGION" \
+            --memory "$MEMORY" \
+            --cpu "$CPU" \
+            --image "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" \
+            --platform "managed" \
+            --allow-unauthenticated \
+            --port $PORT \
+            --set-env-vars "ASPNETCORE_ENVIRONMENT=Staging"
