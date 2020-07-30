@@ -20,17 +20,7 @@ namespace ETT_Backend.Repository
 
     public DBConnection(IConfiguration configuration)
     {
-      switch(configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT")) {
-        case "PRODUCTION":
-          connection = new NpgsqlConnection(configuration.GetValue<string>("CONNECTION_PRODUCTION"));
-          break;
-        case "STAGING":
-          connection = new NpgsqlConnection(configuration.GetValue<string>("CONNECTION_STAGING"));
-          break;
-        default:
-          connection = new NpgsqlConnection(configuration.GetValue<string>("CONNECTION"));
-          break;
-      }
+      connection = new NpgsqlConnection(configuration.GetValue<string>("CONNECTION"));
     }
 
     public void Connect()
