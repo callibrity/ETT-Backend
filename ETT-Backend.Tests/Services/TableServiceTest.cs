@@ -104,9 +104,6 @@ namespace ETT_Backend.Services.Test
         {"current_billable_hours", 100},
         {"target_training_hours", 100},
         {"current_training_hours", 100},
-        {"total_yearly_pto", 100},
-        {"overflow_pto", 100},
-        {"used_pto", 100},
         {"the_year", 2020},
         {"billable_target_to_date", 100},
         {"updated_at", dt}
@@ -114,7 +111,7 @@ namespace ETT_Backend.Services.Test
       var expectedEmployeesConflict = 
         " ON CONFLICT (employee_number_fk,the_year) DO UPDATE SET yearly_billable_target_hours=EXCLUDED.yearly_billable_target_hours,"
         + "current_billable_hours=EXCLUDED.current_billable_hours,target_training_hours=EXCLUDED.target_training_hours,current_training_hours=EXCLUDED.current_training_hours,"
-        + "total_yearly_pto=EXCLUDED.total_yearly_pto,overflow_pto=EXCLUDED.overflow_pto,used_pto=EXCLUDED.used_pto,billable_target_to_date=EXCLUDED.billable_target_to_date,updated_at=EXCLUDED.updated_at";
+        + "billable_target_to_date=EXCLUDED.billable_target_to_date,updated_at=EXCLUDED.updated_at";
       var actualEmployeesConflict = QueryGenerator.OnConflict(ConstraintKeys["ett_employee_metrics"], ettEmployeeMetrics);
 
       Assert.Equal(expectedEmployeesConflict, actualEmployeesConflict);
