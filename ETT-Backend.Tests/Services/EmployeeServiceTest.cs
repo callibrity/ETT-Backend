@@ -11,10 +11,11 @@ namespace ETT_Backend.Services.Test
     [Fact]
     public void RetrieveEmployeeHoursValidEmail()
     {
+      System.DateTime dt = new System.DateTime();
       List<Employee> dbRetVal = new List<Employee>()
       {
-        new Employee("lol1", "lol2", "lol3", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),
-        new Employee("lul", "lul", "lul", 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)
+        new Employee("lol1", "lol2", "lol3", 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, dt),
+        new Employee("lul", "lul", "lul", 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, dt)
       };
 
       MockServiceProvider serviceProvider = new MockServiceProvider()
