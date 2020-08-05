@@ -28,7 +28,6 @@ namespace ETT_Backend
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddSingleton<ITableService, TableService>();
             services.AddScoped<IDBConnection, DBConnection>();
-            services.AddScoped<HMACAuthenticationAttribute>();
 
             AddCors(services);
             AddAuthentication(services);

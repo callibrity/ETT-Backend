@@ -22,6 +22,9 @@ To access the database and view tables, download a database tool such as DBeaver
     - Copy the contents of appsettings.Development.json and paste it into the newly created appsettings.json
     - Ask a team member to help you fill in the values since this is a skeleton of the settings.
 4. If using VS Code:
-    - In the extensions tab, install the following extensions: 'C# for Visual Studio Code' and 'C# IDE Extensions for VSCode'
+    - In the extensions tab, install the following extensions: 
+        - C# for Visual Studio Code
+        - C# IDE Extensions for VSCode
+        - EditorConfig for VSCode
     - In a terminal (in the root project folder), run 'dotnet build' to build the project and sync dependencies
     - To run, you can either use 'dotnet run' in the terminal or use the menu: Run \-> Run Without Debugging
