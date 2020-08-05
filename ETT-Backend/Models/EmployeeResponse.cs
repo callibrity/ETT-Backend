@@ -14,15 +14,15 @@ namespace ETT_Backend.Models
         [JsonProperty("growth")]
         public GrowthHours Growth;
 
-        [JsonProperty("dbUpdate")]
-        public LastUpdatedAt DBUpdate;
+        [JsonProperty("updatedAt")]
+        public string UpdatedAt;
 
         public EmployeeResponse(Employee emp)
         {
             EmployeeId = emp.EmployeeNumber;
             Billable = new BillableHours(emp.CurrentBillableHours, emp.BillableTargetToDate, emp.YearlyBillableTargetHours);
             Growth = new GrowthHours(emp.CurrentTrainingHours, emp.TargetTrainingHours - emp.CurrentTrainingHours, emp.TargetTrainingHours);
-            DBUpdate = new LastUpdatedAt(emp.UpdatedAt);
+            UpdatedAt = emp.UpdatedAt.ToString("MM/dd/yyyy HH:mm:ss");
         }
 
         public EmployeeResponse()
