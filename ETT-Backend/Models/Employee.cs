@@ -16,9 +16,10 @@ namespace ETT_Backend.Models
         public double TotalYearlyPTO { get; set; }
         public double OverflowPTO { get; set; }
         public double UsedPTO { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public Employee(string employeeNumber, string firstName, string lastName, double yearlyBillableTargetHours, double billableTargetToDate, double currentBillableHours,
-                        double targetTrainingHours, double currentTrainingHours, double totalYearlyPTO, double overflowPTO, double usedPTO)
+                        double targetTrainingHours, double currentTrainingHours, double totalYearlyPTO, double overflowPTO, double usedPTO, DateTime updatedAt )
         {
             this.EmployeeNumber = employeeNumber;
             this.FirstName = firstName;
@@ -31,6 +32,7 @@ namespace ETT_Backend.Models
             this.TotalYearlyPTO = totalYearlyPTO;
             this.OverflowPTO = overflowPTO;
             this.UsedPTO = usedPTO;
+            this.UpdatedAt = updatedAt;
 
         }
     }
