@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using ETT_Backend.Repository;
+using ETT_Backend.Configuration.Security;
 
 namespace ETT_Backend
 {
@@ -27,7 +28,7 @@ namespace ETT_Backend
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddSingleton<ITableService, TableService>();
             services.AddScoped<IDBConnection, DBConnection>();
-            
+
             AddCors(services);
             AddAuthentication(services);
             AddSwagger(services);

@@ -1,16 +1,13 @@
 ﻿using ETT_Backend.Interfaces;
-using ETT_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using ETT_Backend.Models.Constants;
-using static ETT_Backend.Models.Constants.Constants;
+using ETT_Backend.Configuration.Security.basic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ETT_Backend.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class TableController : ControllerBase
     {
@@ -22,7 +19,7 @@ namespace ETT_Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [ApiAuth]
         [Route("{table}")]
         public ActionResult InsertData(string table, List<dynamic> rows)
         {

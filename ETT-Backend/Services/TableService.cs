@@ -22,23 +22,15 @@ namespace ETT_Backend.Services
 
     public int InsertRows(string table, List<dynamic> rows)
     {
-      try
+      int dbResponse = 0;
+      using (IServiceScope scope = ServiceProvider.CreateScope())
       {
-        int dbResponse = 0;
-        using (IServiceScope scope = ServiceProvider.CreateScope())
-        {
-          IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
-          dbConnection.Connect();
-          string insertStatement = CreateInsertStatement(table, rows);
-          dbResponse = dbConnection.ExecuteNonQuery(insertStatement);
-        }
-        return dbResponse;
+        IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
+        dbConnection.Connect();
+        string insertStatement = CreateInsertStatement(table, rows);
+        dbResponse = dbConnection.ExecuteNonQuery(insertStatement);
       }
-      catch (Exception e)
-      {
-        Console.Write("TableService insert failed\n", e.Message);
-        return -1;
-      }
+      return dbResponse;
     }
 
     public string CreateInsertStatement(string table, List<dynamic> rows)
