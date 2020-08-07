@@ -16,7 +16,7 @@ namespace ETT_Backend.Repository.Test
       + "JOIN ett_employee_metrics em on em.employee_number_fk = e.employee_number "
       + $"WHERE e.employee_email = 'first.last@email.com'";
       string email = "first.last@email.com";
-      string actual = QueryGenerator.GetEmployee(email);
+      string actual = QueryGenerator.GetEmployeeMetrics(email);
       Assert.Equal(expected, actual);
     }
 

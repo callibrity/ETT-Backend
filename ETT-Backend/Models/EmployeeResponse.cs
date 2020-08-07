@@ -17,7 +17,7 @@ namespace ETT_Backend.Models
         [JsonProperty("updatedAt")]
         public string UpdatedAt;
 
-        public EmployeeResponse(Employee emp)
+        public EmployeeResponse(EmployeeMetrics emp)
         {
             EmployeeId = emp.EmployeeNumber;
             Billable = new BillableHours(emp.CurrentBillableHours, emp.BillableTargetToDate, emp.YearlyBillableTargetHours);

@@ -17,7 +17,7 @@ namespace ETT_Backend.Controllers.Test
     {
       System.DateTime dt = new System.DateTime();
       var testEmail = "test@callibrity.com";
-      var employee = new Employee("1111", "test", "name", 100, 100, 100, 100, 100, dt);
+      var employee = new EmployeeMetrics("1111", "test", "name", 100, 100, 100, 100, 100, dt);
       var mockEmployeeRes = new EmployeeResponse(employee);
       var empService = new Mock<IEmployeeService>();
       empService.Setup(serv => serv.RetrieveEmployeeMetrics(It.IsAny<string>())).Returns(mockEmployeeRes);

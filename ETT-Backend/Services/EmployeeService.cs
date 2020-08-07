@@ -16,6 +16,19 @@ namespace ETT_Backend.Services
       ServiceProvider = serviceProvider;
     }
 
+    public EttEmployee RetrieveEmployeeInfo(string email)
+    {
+      using (IServiceScope scope = ServiceProvider.CreateScope())
+      {
+        IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
+        dbConnection.Connect();
+        var query = QueryGenerator.GetEmployeeInfo(email);
+        var result = dbConnection.ExecuteQuery<EttEmployee>(query);
+
+        return result.Any() ? result.First() : null;
+      }
+    }
+
     public EmployeeResponse RetrieveEmployeeMetrics(string email)
     {
       using (IServiceScope scope = ServiceProvider.CreateScope())
@@ -23,7 +36,7 @@ namespace ETT_Backend.Services
         IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
         dbConnection.Connect();
 
-        var result = dbConnection.ExecuteQuery<Employee>(QueryGenerator.GetEmployee(email));
+        var result = dbConnection.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics(email));
 
         return result.Any() ? new EmployeeResponse(result.First()) : null;
       }

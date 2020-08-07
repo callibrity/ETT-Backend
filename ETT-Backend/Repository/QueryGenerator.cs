@@ -7,7 +7,14 @@ namespace ETT_Backend.Repository
 {
   public static class QueryGenerator
   {
-    public static string GetEmployee(string employeeEmail)
+    public static string GetEmployeeInfo(string employeeEmail)
+    {
+      return "SELECT first_name, last_name, role "
+           + "FROM public.ett_employee "
+           + $"WHERE employee_email = '{employeeEmail}'";
+    }
+
+    public static string GetEmployeeMetrics(string employeeEmail)
     {
       return "SELECT e.employee_number, e.first_name, e.last_name, "
            + "em.yearly_billable_target_hours, em.billable_target_to_date, em.current_billable_hours, em.target_training_hours, em.current_training_hours, em.updated_at "
