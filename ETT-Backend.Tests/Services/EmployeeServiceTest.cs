@@ -12,17 +12,17 @@ namespace ETT_Backend.Services.Test
     public void RetrieveEmployeeHoursValidEmail()
     {
       System.DateTime dt = new System.DateTime();
-      List<Employee> dbRetVal = new List<Employee>()
+      List<EmployeeMetrics> dbRetVal = new List<EmployeeMetrics>()
       {
-        new Employee("lol1", "lol2", "lol3", 1.0, 2.0, 3.0, 4.0, 5.0, dt),
-        new Employee("lul", "lul", "lul", 2.0, 2.0, 2.0, 2.0, 2.0, dt)
+        new EmployeeMetrics("lol1", "lol2", "lol3", 1.0, 2.0, 3.0, 4.0, 5.0, dt),
+        new EmployeeMetrics("lul", "lul", "lul", 2.0, 2.0, 2.0, 2.0, 2.0, dt)
       };
 
       MockServiceProvider serviceProvider = new MockServiceProvider()
         .AddMockDBConnection();
 
       serviceProvider.MockDBConnection
-         .Setup(_ => _.ExecuteQuery<Employee>(QueryGenerator.GetEmployee("cmason@callibrity.com")))
+         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics("cmason@callibrity.com")))
          .Returns(dbRetVal);
 
       EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
@@ -40,17 +40,43 @@ namespace ETT_Backend.Services.Test
     [Fact]
     public void RetrieveEmployeeHoursInvalidEmail()
     {
-      List<Employee> dbRetVal = new List<Employee>();
+      List<EmployeeMetrics> dbRetVal = new List<EmployeeMetrics>();
 
       MockServiceProvider serviceProvider = new MockServiceProvider()
         .AddMockDBConnection();
 
       serviceProvider.MockDBConnection
-         .Setup(_ => _.ExecuteQuery<Employee>(QueryGenerator.GetEmployee("cmason@callibrity.com")))
+         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics("cmason@callibrity.com")))
          .Returns(dbRetVal);
 
       EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
       EmployeeResponse response = employeeService.RetrieveEmployeeMetrics("cmason@callibrity.com");
+
+      Assert.Null(response);
+    }
+
+    [Fact]
+    public void RetrieveEmployeeRoleString()
+    {
+      var expectedQuery = "SELECT first_name, last_name, role FROM public.ett_employee WHERE employee_email = 'test@callibrity.com'";
+      var query = QueryGenerator.GetEmployeeInfo("test@callibrity.com");
+      Assert.Equal(expectedQuery, query);
+    }
+
+    [Fact]
+    public void RetrieveEmployeeInfo()
+    {
+      List<EttEmployee> dbRetVal = new List<EttEmployee>();
+
+      MockServiceProvider serviceProvider = new MockServiceProvider()
+        .AddMockDBConnection();
+
+      serviceProvider.MockDBConnection
+         .Setup(_ => _.ExecuteQuery<EttEmployee>(QueryGenerator.GetEmployeeInfo("test@callibrity.com")))
+         .Returns(dbRetVal);
+
+      EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
+      EttEmployee response = employeeService.RetrieveEmployeeInfo("test@callibrity.com");
 
       Assert.Null(response);
     }

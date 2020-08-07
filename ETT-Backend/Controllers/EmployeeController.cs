@@ -6,29 +6,42 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ETT_Backend.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+  [ApiController]
+  [Route("[controller]")]
+  public class EmployeeController : ControllerBase
+  {
+    private IEmployeeService _EmployeeService;
+
+    public EmployeeController(IEmployeeService employeeService)
     {
-        private IEmployeeService _EmployeeService;
-
-        public EmployeeController(IEmployeeService employeeService)
-        {
-            _EmployeeService = employeeService;
-        }
-
-        [HttpGet]
-        [Authorize]
-        [Route("hours")]
-        public ActionResult<EmployeeResponse> GetEmployeeMetrics()
-        {
-            var email = User.FindFirst(x => x.Type == "email").Value;
-            var response = _EmployeeService.RetrieveEmployeeMetrics(email);
-            if (response == null)
-            {
-                return NotFound();
-            }
-            return Ok(JsonConvert.SerializeObject(response));
-        }
+      _EmployeeService = employeeService;
     }
+
+    [HttpGet]
+    [Authorize]
+    public ActionResult<EttEmployee> GetEmployeeInfo()
+    {
+      var email = User.FindFirst(x => x.Type == "email").Value;
+      var response = _EmployeeService.RetrieveEmployeeInfo(email);
+      if (response == null)
+      {
+        return NotFound();
+      }
+      return Ok(JsonConvert.SerializeObject(response));
+    }
+
+    [HttpGet]
+    [Authorize]
+    [Route("hours")]
+    public ActionResult<EmployeeResponse> GetEmployeeMetrics()
+    {
+      var email = User.FindFirst(x => x.Type == "email").Value;
+      var response = _EmployeeService.RetrieveEmployeeMetrics(email);
+      if (response == null)
+      {
+        return NotFound();
+      }
+      return Ok(JsonConvert.SerializeObject(response));
+    }
+  }
 }

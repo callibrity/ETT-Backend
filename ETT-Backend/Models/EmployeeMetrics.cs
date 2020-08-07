@@ -2,7 +2,7 @@
 
 namespace ETT_Backend.Models
 {
-    public class Employee
+    public class EmployeeMetrics
     {
 
         public string EmployeeNumber { get; set; }
@@ -15,8 +15,8 @@ namespace ETT_Backend.Models
         public double CurrentTrainingHours { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public Employee(string employeeNumber, string firstName, string lastName, double yearlyBillableTargetHours, double billableTargetToDate, double currentBillableHours,
-                        double targetTrainingHours, double currentTrainingHours, DateTime updatedAt )
+        public EmployeeMetrics(string employeeNumber, string firstName, string lastName, double yearlyBillableTargetHours, double billableTargetToDate, double currentBillableHours,
+                               double targetTrainingHours, double currentTrainingHours, DateTime updatedAt )
         {
             this.EmployeeNumber = employeeNumber;
             this.FirstName = firstName;
