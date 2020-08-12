@@ -14,8 +14,8 @@ env:
   PORT: 80
 
 jobs:
-  deploy:
-    name: Deploy to Cloud Run Production
+  tag-image:
+    name: Tag Cloud Container Image with Release Tag
     runs-on: ubuntu-latest
 
     steps:
@@ -25,15 +25,31 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '290.0.1'
-          service_account_key: ${{ secrets.RUN_SA_KEY }}
-          project_id: ${{ secrets.RUN_PROJECT }}
+          service_account_key: ${{ secrets.ARTIFACTS_SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.ARTIFACTS_PROJECT }}
 
-      # Check for image
+      # Check for image, add release tag to image tags
       - run: |-
-          gcloud container images describe \
+          gcloud container images add-tag \
             --quiet \
-            "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA"
+            "gcr.io/${{ secrets.ARTIFACTS_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" \
+            "gcr.io/${{ secrets.ARTIFACTS_PROJECT }}/$CONTAINER_REGISTRY:${GITHUB_REF#refs/*/}"
+
+  deploy:
+    name: Deploy to Cloud Run Production
+    needs: tag-image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
   
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.PRODUCTION_SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.PRODUCTION_PROJECT }}
+
       # Deploy image to Cloud Run
       - run: |-
           gcloud run deploy "$SERVICE_NAME" \
@@ -41,7 +57,7 @@ jobs:
             --region "$RUN_REGION" \
             --memory "$MEMORY" \
             --cpu "$CPU" \
-            --image "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" \
+            --image "gcr.io/${{ secrets.ARTIFACTS_PROJECT }}/$CONTAINER_REGISTRY:${GITHUB_REF#refs/*/}" \
             --platform "managed" \
             --allow-unauthenticated \
             --port $PORT \
