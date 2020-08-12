@@ -28,11 +28,12 @@ jobs:
           service_account_key: ${{ secrets.RUN_SA_KEY }}
           project_id: ${{ secrets.RUN_PROJECT }}
 
-      # Check for image
+      # Check for image, add release tag to image tags
       - run: |-
-          gcloud container images describe \
+          gcloud container images add-tag \
             --quiet \
-            "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA"
+            "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:$GITHUB_SHA" \
+            "gcr.io/${{ secrets.RUN_PROJECT }}/$CONTAINER_REGISTRY:${GITHUB_REF#refs/*/}"
   
       # Deploy image to Cloud Run
       - run: |-
