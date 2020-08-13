@@ -10,7 +10,7 @@ env:
   MEMORY: 2048Mi
   CPU: 2000m
   CONTAINER_REGISTRY: intranet-api
-  SERVICE_NAME: intranet-api-production
+  SERVICE_NAME: intranet-api
   PORT: 80
 
 jobs:
