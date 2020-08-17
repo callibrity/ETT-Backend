@@ -1,4 +1,5 @@
 using ETT_Backend.Models;
+using System.Collections.Generic;
 
 namespace ETT_Backend.Interfaces
 {
@@ -6,5 +7,6 @@ namespace ETT_Backend.Interfaces
   {
     EttEmployee RetrieveEmployeeInfo(string email);
     EmployeeResponse RetrieveEmployeeMetrics(string email);
+    List<EmployeeResponse> RetrieveAllEmployeeMetrics();
   }
 }

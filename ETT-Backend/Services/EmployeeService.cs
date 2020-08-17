@@ -4,6 +4,7 @@ using ETT_Backend.Interfaces;
 using ETT_Backend.Models;
 using ETT_Backend.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace ETT_Backend.Services
 {
@@ -36,9 +37,26 @@ namespace ETT_Backend.Services
         IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
         dbConnection.Connect();
 
-        var result = dbConnection.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics(email));
+        var result = dbConnection.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetricsHeader() + QueryGenerator.WhereEmail(email));
 
         return result.Any() ? new EmployeeResponse(result.First()) : null;
+      }
+    }
+
+    public List<EmployeeResponse> RetrieveAllEmployeeMetrics()
+    {
+      using (IServiceScope scope = ServiceProvider.CreateScope())
+      {
+        IDBConnection dbConnection = scope.ServiceProvider.GetRequiredService<IDBConnection>();
+        dbConnection.Connect();
+
+        var results = dbConnection.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetricsHeader() + QueryGenerator.WhereRole("Developer"));
+        var castedResults = new List<EmployeeResponse>();
+        foreach (var res in results) 
+        {
+          castedResults.Add(new EmployeeResponse(res));
+        }
+        return castedResults;
       }
     }
   }

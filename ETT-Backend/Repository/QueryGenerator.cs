@@ -14,13 +14,22 @@ namespace ETT_Backend.Repository
            + $"WHERE employee_email = '{employeeEmail}'";
     }
 
-    public static string GetEmployeeMetrics(string employeeEmail)
+    public static string GetEmployeeMetricsHeader()
     {
       return "SELECT e.employee_number, e.first_name, e.last_name, "
            + "em.yearly_billable_target_hours, em.billable_target_to_date, em.current_billable_hours, em.target_training_hours, em.current_training_hours, em.updated_at "
            + "FROM public.ett_employee e "
-           + "JOIN ett_employee_metrics em on em.employee_number_fk = e.employee_number "
-           + $"WHERE e.employee_email = '{employeeEmail}'";
+           + "JOIN ett_employee_metrics em on em.employee_number_fk = e.employee_number ";
+    }
+
+    public static string WhereEmail(string email) 
+    {
+      return $"WHERE e.employee_email = '{email}'";
+    }
+
+    public static string WhereRole(string role)
+    {
+      return $"WHERE e.role = '{role}'";
     }
 
     public static string InsertObjectHeader(string tableName, JObject obj)

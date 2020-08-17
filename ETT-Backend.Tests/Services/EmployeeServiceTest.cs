@@ -22,7 +22,7 @@ namespace ETT_Backend.Services.Test
         .AddMockDBConnection();
 
       serviceProvider.MockDBConnection
-         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics("cmason@callibrity.com")))
+         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetricsHeader() + QueryGenerator.WhereEmail("cmason@callibrity.com")))
          .Returns(dbRetVal);
 
       EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
@@ -46,7 +46,7 @@ namespace ETT_Backend.Services.Test
         .AddMockDBConnection();
 
       serviceProvider.MockDBConnection
-         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetrics("cmason@callibrity.com")))
+         .Setup(_ => _.ExecuteQuery<EmployeeMetrics>(QueryGenerator.GetEmployeeMetricsHeader() + QueryGenerator.WhereEmail("cmason@callibrity.com")))
          .Returns(dbRetVal);
 
       EmployeeService employeeService = new EmployeeService(serviceProvider.Build());
