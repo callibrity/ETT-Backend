@@ -3,6 +3,7 @@ using ETT_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace ETT_Backend.Controllers
 {
@@ -37,6 +38,19 @@ namespace ETT_Backend.Controllers
     {
       var email = User.FindFirst(x => x.Type == "email").Value;
       var response = _EmployeeService.RetrieveEmployeeMetrics(email);
+      if (response == null)
+      {
+        return NotFound();
+      }
+      return Ok(JsonConvert.SerializeObject(response));
+    }
+
+    [HttpGet]
+    [Authorize]
+    [Route("hours/all")]
+    public ActionResult<List<EmployeeResponse>> GetAllEmployeeMetrics()
+    {
+      var response = _EmployeeService.RetrieveAllEmployeeMetrics();
       if (response == null)
       {
         return NotFound();
