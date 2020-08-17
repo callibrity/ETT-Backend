@@ -5,6 +5,9 @@ namespace ETT_Backend.Models
 {
     public class EmployeeResponse
     {
+        [JsonProperty("employeeName")]
+        public string EmployeeName;
+
         [JsonProperty("employeeId")]
         public string EmployeeId;
 
@@ -19,6 +22,7 @@ namespace ETT_Backend.Models
 
         public EmployeeResponse(EmployeeMetrics emp)
         {
+            EmployeeName = $"{emp.FirstName} {emp.LastName}";
             EmployeeId = emp.EmployeeNumber;
             Billable = new BillableHours(emp.CurrentBillableHours, emp.BillableTargetToDate, emp.YearlyBillableTargetHours);
             Growth = new GrowthHours(emp.CurrentTrainingHours, emp.TargetTrainingHours - emp.CurrentTrainingHours, emp.TargetTrainingHours);
