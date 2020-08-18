@@ -13,6 +13,8 @@ To access the database and view tables, download a database tool such as DBeaver
 ## Environment Setup
 ### Prerequisites
 - If not using Visual Studio, download .Net Core 3.1 (https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- Docker Desktop should be installed on your machine follow the most current documentation here to get started with docker - it's recommended to try their hello-world project first to make sure it is running on your machine.
+(https://www.docker.com/get-started)
 
 ### Set up
 1. Clone repo
@@ -28,3 +30,12 @@ To access the database and view tables, download a database tool such as DBeaver
         - EditorConfig for VSCode
     - In a terminal (in the root project folder), run 'dotnet build' to build the project and sync dependencies
     - To run, you can either use 'dotnet run' in the terminal or use the menu: Run \-> Run Without Debugging
+
+## Troubleshooting
+### refresh on save
+When making modifications running the project with docker-compose sometimes a cached artifact will prevent the project from reflecting changes. If this occurs you can run the following from the directory where the docker-compose.yaml file is located.
+```
+docker-compose down
+docker-compose build --no-cache
+docker-compose up
+```
