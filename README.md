@@ -33,7 +33,8 @@ To access the database and view tables, download a database tool such as DBeaver
 
 ## Troubleshooting
 ### refresh on save
-When making modifications running the project with docker-compose sometimes a cached artifact will prevent the project from reflecting changes. If this occurs you can run the following from the directory where the docker-compose.yaml file is located.
+When making modifications running the project with docker-compose sometimes a cached artifact will prevent the project from reflecting changes. 
+If this occurs you can run the following from the directory where the docker-compose.yaml file is located.
 ```
 docker-compose down
 docker-compose build --no-cache
