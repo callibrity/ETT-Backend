@@ -46,23 +46,20 @@ To access the database and view tables, download a database tool such as [SQuirr
   - it's recommended to try their hello-world project first to make sure it is running on your machine.
 - You may want to install [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1), It is not necessary if using the recommended docker-compose to spin up, but in case a reason arises to run it locally outside the container.
 
-
-
 ## Set up
 ### Docker-compose (preferred)
 1. Open the project at the root level in VS Code
 2. Use a terminal or file explorer to run the certs.sh script matching your OS located in ETT-Backend/scripts. You may be prompted for your system password multiple times as the script progresses
-3. To run, use a terminal to run ```docker-compose up``` in the /ETT-Backend/ETT-Backend/ folder where the docker-compose.yaml is located.  
-\- Alternatively, you can right-click the docker-compose file and select "compose up" 
-6. Pull down the ETT_Database repo and use ```dotnet run``` from this project to populate the database that docker-compose just spun up. More detail on this step can be found in that repo if needed - but it should know where to point already so touching config files shouldn't be required.
+3. To run, use a terminal to run ```docker-compose build && docker-compose up``` in the /ETT-Backend/ETT-Backend/ folder where the docker-compose.yaml is located.   
+4. Pull down the [ETT_Database repo](https://github.com/callibrity/ETT_Database/blob/master/README.md) and use ```dotnet run``` from this project to populate the database that docker-compose just spun up. More detail on this step can be found in that repo if needed. This step is only necessary for the first run or when the database schema changes.
 
 ### Run Locally outside container 
 #### (Not recommended, but could be useful in edge cases such as troubleshooting a potential docker problem)
 1. Clone repo
 2. Open cloned project in IDE of choice
 4. If using VS Code:
-    - In a terminal (in the root project folder), run 'dotnet build' to build the project and sync dependencies
-    - To run, you can either use 'dotnet run' in the terminal or use the menu: Run \-> Run Without Debugging
+    - In a terminal (in the root project folder), run `dotnet build` to build the project and sync dependencies
+    - To run, you can either use `dotnet run` in the terminal or use the menu: Run -> Run Without Debugging
 
 ## Troubleshooting
 ### refresh on save
