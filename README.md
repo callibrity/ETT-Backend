@@ -9,47 +9,58 @@
 - [Xunit testing](https://xunit.net/docs/getting-started/netcore/cmdline)
 - [Docker](https://www.docker.com/get-started)
 
+## Environments
+We currently have 3 Google Cloud Platform (GCP) projects associated with this site. 
+- [intranet](https://console.cloud.google.com/run?organizationId=876666147511&project=intranet-277714) is where we store items that are shared among environments (credentials, container images, etc).
+- [intranet-staging](https://console.cloud.google.com/run?organizationId=876666147511&project=intranet-staging-285714) is where images get deployed automaticallty when they are merged into master in this repository. It interacts with staging environments for the backend of the application and is useful for end to end testing before deploying to production
+- [intranet-production](https://console.cloud.google.com/run?project=intranet-production-285714) is meant to be the "live" site in which deployments will only be made manually when it is deemed appropriate.
+
+## Hosting
+The site is currently hosted on Google Cloud Run at the following URL's: 
+- [Staging](https://intranet-api-uxl72aopia-uk.a.run.app)
+- [Production](https://intranet-api-yygv4n2zyq-uk.a.run.app)
+
+To view the Cloud Run instances, go to https://console.cloud.google.com/ -> Cloud Run -> intranet-app within the respective project/environment.
+
+## Deployment
+Staging is automatically deployed upon a push to the master branch.  
+
+To deploy to production, go to the github repository then under Code -> Tags -> Releases, click "Draft a New Release." Once you create a new release, github actions will deploy it to production. 
+
+For both scenarios, github will create an image within the GCP [Container Registry](https://console.cloud.google.com/gcr/images/intranet-277714/GLOBAL/intranet-app?project=intranet-277714&gcrImageListsize=30) which will then be deployed to the appropriate environment.
+
 ## Database
-We are using a postgres SQL database in this project. It is isolated from other Callibrity data and solely intended to serve this project.
-
-
-- Staging and Production databases are located on Google Cloud. To view the database settings, go to https://console.cloud.google.com/ \-> SQL -> intranet-pgsql.
-- Make sure you are using your callibrity google account and the 'intranet' project is selected. 
+We are using a postgres SQL database located on Google Cloud. To view the database settings, go to the SQL tab in the [GCP console](https://console.cloud.google.com)
+- Make sure you are using your callibrity google account and the correct project is selected. 
 
 To access the database and view tables, download a database tool such as [SQuirreL](http://squirrel-sql.sourceforge.net/) (lightweight and recommended) or [DBeaver](https://dbeaver.io/) (Only recommended if you are already familiar with it or more robust Relational Database Management Tools)
 
 ## Environment Setup
 ### Prerequisites
-- [VS Code](https://code.visualstudio.com/) is the preferred IDE for this project (it is lightweight and especially configurable for the frontend of the project). It will recommend C#, dotnet and likely other extensions when you open this project - install these.
+- [VS Code](https://code.visualstudio.com/) is the preferred IDE for this project (it is lightweight and especially configurable for the frontend of the project). Please install the following extensions:
+  - C# for Visual Studio Code
+  - C# IDE Extensions for VSCode
+  - EditorConfig for VSCode
+  - Docker
 - [Docker Desktop](https://www.docker.com/get-started) should be installed on your machine follow the most current documentation here to get started with docker.
   - it's recommended to try their hello-world project first to make sure it is running on your machine.
-- you may want to install [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1), It is not necessary if using the recommended docker-compose to spin up, but in case a reason arises to run it locally outside the container.
+- You may want to install [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1), It is not necessary if using the recommended docker-compose to spin up, but in case a reason arises to run it locally outside the container.
 
 
 
 ## Set up
 ### Docker-compose (preferred)
 1. Open the project at the root level in VS Code
-2. in vs code select Terminal -> New Terminal
-3. ```cd scripts/ && ls```
-4. run the appropriate script based on your operating system with sudo ( e.g ```sudo bash mac-certs.sh``` ) you will be prompted for your system password multiple times as the script progresses
-5. Change directories in the terminal ```cd ../ETT-Backend/``` to the /ETT-Backend/ETT-Backend/ folder where the docker-compose.yaml is located
-6. run ```docker-compose up``` from this location.
-7. Pull down the ETT_Database repo and use ```dotnet run``` from this project to populate the database that docker-compose just spun up. More detail on this step can be found in that repo if needed - but it should know where to point already so touching config files shouldn't be required.
+2. Use a terminal or file explorer to run the certs.sh script matching your OS located in ETT-Backend/scripts. You may be prompted for your system password multiple times as the script progresses
+3. To run, use a terminal to run ```docker-compose up``` in the /ETT-Backend/ETT-Backend/ folder where the docker-compose.yaml is located.  
+\- Alternatively, you can right-click the docker-compose file and select "compose up" 
+6. Pull down the ETT_Database repo and use ```dotnet run``` from this project to populate the database that docker-compose just spun up. More detail on this step can be found in that repo if needed - but it should know where to point already so touching config files shouldn't be required.
 
 ### Run Locally outside container 
 #### (Not recommended, but could be useful in edge cases such as troubleshooting a potential docker problem)
 1. Clone repo
 2. Open cloned project in IDE of choice
-3. Populate appsettings
-    - Create a file named appsettings.json in the main project directory (ETT-Backend/ETT-Backend)
-    - Copy the contents of appsettings.Development.json and paste it into the newly created appsettings.json
-    - Ask a team member to help you fill in the values since this is a skeleton of the settings
 4. If using VS Code:
-    - In the extensions tab, install the following extensions: 
-        - C# for Visual Studio Code
-        - C# IDE Extensions for VSCode
-        - EditorConfig for VSCode
     - In a terminal (in the root project folder), run 'dotnet build' to build the project and sync dependencies
     - To run, you can either use 'dotnet run' in the terminal or use the menu: Run \-> Run Without Debugging
 
