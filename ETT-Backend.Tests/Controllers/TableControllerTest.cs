@@ -56,5 +56,33 @@ namespace ETT_Backend.Controllers.Test
       Assert.Equal(200, okResult.StatusCode);
       tableService.Verify(x => x.InsertRows(It.IsAny<string>(), It.IsAny<List<dynamic>>()), Times.Once);
     }
+
+    [Fact]
+    public void InsertDataFail()
+    {
+      var testEmail = "test@callibrity.com";
+      List<dynamic> testRows = null;
+      var tableService = new Mock<ITableService>();
+      tableService.Setup(serv => serv.InsertRows(It.IsAny<string>(), testRows)).Returns(-1);
+      var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+      {
+        new Claim(ClaimTypes.Name, "test"),
+        new Claim(ClaimTypes.NameIdentifier, "1"),
+        new Claim("email", testEmail),
+      }, "mock"));
+
+      var controller = new TableController(tableService.Object);
+      controller.ControllerContext = new ControllerContext()
+      {
+        HttpContext = new DefaultHttpContext() { User = user }
+      };
+      
+      var result = controller.InsertData("employees", testRows);
+      var badReqResult = result as BadRequestResult;
+
+      Assert.NotNull(badReqResult);
+      Assert.Equal(400, badReqResult.StatusCode);
+      tableService.Verify(x => x.InsertRows(It.IsAny<string>(), It.IsAny<List<dynamic>>()), Times.Once);
+    }
   }
 }
