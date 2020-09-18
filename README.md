@@ -58,6 +58,20 @@ To access the database and view tables, download a database tool such as [SQuirr
 1. Clone repo
 2. Open cloned project in IDE of choice
 4. If using VS Code:
+    - In the extensions tab, install the following extensions: 
+        - C# for Visual Studio Code
+        - C# IDE Extensions for VSCode
+        - EditorConfig for VSCode
+    - In a terminal (in the root project folder), run 'dotnet build' to build the project and sync dependencies
+    - To run, you can either use 'dotnet run' in the terminal or use the menu: Run \-> Run Without Debugging
+
+## Run Code Coverage Report
+1. Navigate to ETT-Backend.Tests directory
+2. dotnet test --collect:"XPlat Code Coverage"
+3. Move file coverage.cobertura.xml from newly generated folder in TestResults
+   to the root of the TestResults folder
+4. dotnet reportgenerator -reports:TestResults/coverage.cobertura.xml -reporttypes:HTML -targetdir:Coverage
+5. Open Coverage/index.html in browser to view report
     - In a terminal (in the root project folder), run `dotnet build` to build the project and sync dependencies
     - To run, you can either use `dotnet run` in the terminal or use the menu: Run -> Run Without Debugging
 

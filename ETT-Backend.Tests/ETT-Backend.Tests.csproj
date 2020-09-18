@@ -12,8 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="dotnet-reportgenerator-cli" Version="4.6.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Moq" Version="4.14.5" />
+    <PackageReference Include="ReportGenerator" Version="4.6.7" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
@@ -21,6 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETT-Backend\ETT-Backend.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-reportgenerator-cli" Version="4.6.7" />
   </ItemGroup>
 
 </Project>
