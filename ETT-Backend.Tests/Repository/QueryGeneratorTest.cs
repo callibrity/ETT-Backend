@@ -121,9 +121,9 @@ namespace ETT_Backend.Repository.Test
         {"employee_email", "test@callibrity.com"}
       };
       var expectedEttEmployeeConflict = " ON CONFLICT (employee_number) DO UPDATE SET first_name=EXCLUDED.first_name,last_name=EXCLUDED.last_name,employee_email=EXCLUDED.employee_email";
-      var actualEttEmployeeConflit = QueryGenerator.OnConflict(ConstraintKeys["ett_employee"], ettEmployeeObject);
+      var actualEttEmployeeConflict = QueryGenerator.OnConflict(ConstraintKeys["ett_employee"], ettEmployeeObject);
 
-      Assert.Equal(expectedEttEmployeeConflict, actualEttEmployeeConflit);
+      Assert.Equal(expectedEttEmployeeConflict, actualEttEmployeeConflict);
     }
 
     [Fact]
