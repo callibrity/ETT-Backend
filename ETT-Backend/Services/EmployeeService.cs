@@ -56,7 +56,7 @@ namespace ETT_Backend.Services
         {
           castedResults.Add(new EmployeeResponse(res));
         }
-        return castedResults;
+        return castedResults.Any() ? castedResults : null;
       }
     }
   }
