@@ -84,3 +84,7 @@ docker-compose down
 docker-compose build --no-cache
 docker-compose up
 ```
+
+## Deployment Notes
+Must be deployed with environment variables API_USERNAME and API_PASSWORD in order for the ETL process to send data through the Table Controller. When sending POST requests to the Table endpoint, the username and password need to be sent base64 encoded as an Authorization header. In Postman, navigate to Authorization tab, select Basic Auth from the dropdown, and supply the same username and password as was deployed with the app.
+
