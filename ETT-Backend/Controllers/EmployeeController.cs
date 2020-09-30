@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using Swashbuckle.Examples;
 
 namespace ETT_Backend.Controllers
 {
@@ -33,6 +34,7 @@ namespace ETT_Backend.Controllers
 
     [HttpGet]
     [Authorize]
+    [SwaggerResponseExample(HttpStatusCode.OK, typeof(EmployeeResponse))]
     [Route("hours")]
     public ActionResult<EmployeeResponse> GetEmployeeMetrics()
     {
@@ -47,6 +49,7 @@ namespace ETT_Backend.Controllers
 
     [HttpGet]
     [Authorize]
+    [SwaggerResponseExample(HttpStatusCode.OK, typeof(IEnumerable<EmployeeResponse>))]
     [Route("hours/all")]
     public ActionResult<List<EmployeeResponse>> GetAllEmployeeMetrics()
     {
