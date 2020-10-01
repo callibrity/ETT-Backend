@@ -38,13 +38,15 @@ To access the database and view tables, download a database tool such as [SQuirr
 ## Environment Setup
 ### Prerequisites
 - [VS Code](https://code.visualstudio.com/) is the preferred IDE for this project (it is lightweight and especially configurable for the frontend of the project). Please install the following extensions:
-  - C# for Visual Studio Code
+  - C# for VSCode
   - C# IDE Extensions for VSCode
   - EditorConfig for VSCode
+  - .NET Core Test Explorer for VSCode (you only need this if you wish to run the ETT-Backend.Tests project, you will need to change the dotnet-test-explorer.testProjectPath VSCode setting to the relative path of the ETT-Backend tests directory if you're not directly in it. see extension docs for clarification if needed.)
   - Docker
 - [Docker Desktop](https://www.docker.com/get-started) should be installed on your machine follow the most current documentation here to get started with docker.
   - it's recommended to try their hello-world project first to make sure it is running on your machine.
 - You may want to install [.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1), It is not necessary if using the recommended docker-compose to spin up, but in case a reason arises to run it locally outside the container.
+
 
 ## Set up
 ### Docker-compose (preferred)
